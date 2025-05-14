@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+
+# Model and data files
+model.pkl
+*.h5
+*.pt
+*.onnx
+*.joblib
+*.sav
+*.npz
+*.npy
+
+# Environment variables
+.env
+.env.*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# IDE specific
+.idea/
+.vscode/
+
+# Jupyter Notebook
+.ipynb_checkpoints/ 

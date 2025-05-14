@@ -1,0 +1,129 @@
+IMPORTANT NOTE: 
+
+* Every time we run ngrok we get new URLs for deployed backend & frontend
+so take the frontendURL and go to => translation app => frontend => screens => WebViewScreen 
+and update the WEB_APP_URL
+
+* And take the backendURL and go to frontend => src => HandDetection
+and update line of axios fetching
+
+
+# How to Run the Full Project from Scratch
+
+## 1. Prerequisites
+- Node.js & npm installed
+- Python 3.x installed
+- pip installed
+- ngrok account and authtoken
+- (Optional) Expo Go app on your mobile device
+
+---
+
+## 2. Clone or Extract the Project
+Unzip or clone your project folder to your workspace.
+
+---
+
+## 3. Backend Setup (Flask)
+1. Open a terminal and navigate to the backend directory:
+   ```bash
+   cd backend
+   ```
+2. (Optional) Create and activate a virtual environment:
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Make sure `model.pkl` is present in the backend directory.
+5. Start the Flask server:
+   ```bash
+   python app.py
+   ```
+
+---
+
+## 4. Frontend Setup (React Web App)
+1. Open a new terminal and navigate to the frontend directory:
+   ```bash
+   cd frontend
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the React app:
+   ```bash
+   npm start
+   ```
+
+---
+
+## 5. Mobile App (React Native/Expo)
+1. Open a new terminal and navigate to the mobile app directory:
+   ```bash
+   cd translation-app/frontend
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the Expo server:
+   ```bash
+   npm start
+   ```
+4. Scan the QR code with Expo Go on your mobile device.
+
+---
+
+## 6. ngrok Setup (Expose Frontend & Backend)
+1. Make sure you have your ngrok authtoken set up:
+   ```bash
+   ngrok config add-authtoken YOUR_AUTHTOKEN
+   ```
+2. Create or edit your ngrok config file (usually at `~/.config/ngrok/ngrok.yml`):
+   ```yaml
+   authtoken: YOUR_AUTHTOKEN
+   tunnels:
+     frontend:
+       proto: http
+       addr: 3000
+     backend:
+       proto: http
+       addr: 5000
+   ```
+3. Start both tunnels:
+   ```bash
+   ngrok start --all
+   ```
+4. Copy the HTTPS URLs for both frontend and backend from the ngrok output.
+
+---
+
+## 7. Update URLs in the Project
+- In your React frontend (e.g., `frontend/src/HandDetection.js`), update the backend API URL to use the backend ngrok HTTPS URL.
+- In your mobile app (e.g., `WebViewScreen.js`), update the web app URL to use the frontend ngrok HTTPS URL.
+
+---
+
+## 8. Access the App
+- On your mobile device, open the Expo app and run the mobile app.
+- When you tap the translation button, it should open the web app via the ngrok URL in your browser.
+- The web app will use the backend ngrok URL for API calls.
+
+---
+
+## 9. Troubleshooting
+- If you restart ngrok, update the URLs in your code to match the new ones.
+- Make sure all servers (Flask, React, Expo) are running before starting ngrok.
+- If you get CORS errors, check your Flask CORS settings.
+
+---
+
+**Enjoy your full-stack sign language translation app!** 
+
+
+
