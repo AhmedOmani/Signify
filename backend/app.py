@@ -7,7 +7,7 @@ from collections import Counter
 # Initialize Flask app
 app = Flask(__name__)
 # Allow connections from any device on the network
-CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app)
 
 # Load the static trained model
 model = joblib.load("model.pkl")
