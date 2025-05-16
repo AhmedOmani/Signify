@@ -1,0 +1,25 @@
+# Python virtual environment
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Exported animations (optional: keep only final versions)
+*.mp4
+*.gif
+
+# Data files (optional: keep only final/curated data)
+data/landmarks/*.json
+
+# Logs
+*.log 
