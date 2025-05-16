@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { StatusBar } from 'react-native';
+import { StatusBar, KeyboardAvoidingView, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 // Screens
@@ -14,7 +14,7 @@ import SettingsScreen from './screens/SettingsScreen';
 import LoginScreen from './screens/LoginScreen';
 import SignupScreen from './screens/SignupScreen';
 import WebViewScreen from './screens/WebViewScreen';
-
+import SignAnimationScreen from './screens/SignAnimationScreen'; 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -80,20 +80,32 @@ export default function App() {
       return (
         <SafeAreaProvider>
           <StatusBar barStyle="dark-content" />
-          <SignupScreen
-            onSignup={setUser}
-            onNavigateToLogin={() => setShowSignup(false)}
-          />
+          <KeyboardAvoidingView
+            style={{ flex: 1 }}
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 40 : 0}
+          >
+            <SignupScreen
+              onSignup={setUser}
+              onNavigateToLogin={() => setShowSignup(false)}
+            />
+          </KeyboardAvoidingView>
         </SafeAreaProvider>
       );
     }
     return (
       <SafeAreaProvider>
         <StatusBar barStyle="dark-content" />
-        <LoginScreen
-          onLogin={setUser}
-          onNavigateToSignup={() => setShowSignup(true)}
-        />
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 40 : 0}
+        >
+          <LoginScreen
+            onLogin={setUser}
+            onNavigateToSignup={() => setShowSignup(true)}
+          />
+        </KeyboardAvoidingView>
       </SafeAreaProvider>
     );
   }
@@ -107,6 +119,11 @@ export default function App() {
             {() => <TabNavigator user={user} onLogout={handleLogout} />}
           </Stack.Screen>
           <Stack.Screen name="WebView" component={WebViewScreen} />
+          <Stack.Screen
+            name="SignAnimationScreen"
+            component={SignAnimationScreen}
+            options={{ title: 'الترجمة الصوتية' }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

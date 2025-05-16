@@ -54,13 +54,16 @@ const HomeScreen = ({ user }) => {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.optionCard, styles.wordCard]}>
+        <TouchableOpacity 
+          style={[styles.optionCard, styles.wordCard]}
+          onPress={() => navigation.navigate('SignAnimationScreen')}
+        >
           <View style={[styles.optionIconContainer, styles.wordIconContainer]}>
             <MaterialCommunityIcons name="text-box-outline" size={24} color="#fff" />
           </View>
           <View style={styles.optionTextContainer}>
             <Text style={styles.optionTitle}>الترجمة الصوتية</Text>
-            <Text style={styles.optionSubtitle}>Speech-to-Sign • Text-to-Sign</Text>
+            <Text style={styles.optionSubtitle}>Text-to-Sign</Text>
           </View>
         </TouchableOpacity>
       </View>
