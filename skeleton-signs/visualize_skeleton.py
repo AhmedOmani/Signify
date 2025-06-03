@@ -71,7 +71,7 @@ def draw_fake_head(ax, pose_landmarks, color='brown', radius=0.08):
     ax.plot(mouth_x, mouth_y, color=color, lw=2, zorder=5)
 
 def main():
-    json_path = "/home/hp/Desktop/final-project-version/skeleton-signs/data/landmarks/شكرا_20250516_171201.json"
+    json_path = "/home/hp/Desktop/final-project-version/skeleton-signs/data/landmarks/ساينفاي_20250603_160057.json"
     if not os.path.exists(json_path):
         print('File not found!')
         return
@@ -107,7 +107,7 @@ def main():
         right_hand = normalize_landmarks(frame.get('right_hand'), min_x, min_y, range_x, range_y)
         if right_hand:
             draw_landmarks(ax, right_hand, HAND_CONNECTIONS, color='green', lw=2, joint_size=30)
-        ax.set_title(f'Frame {frame_idx+1}/{len(frames)}')
+       # ax.set_title(f'Frame {frame_idx+1}/{len(frames)}')
 
     ani = animation.FuncAnimation(fig, update, frames=len(frames), interval=50, repeat=True)
     plt.show()

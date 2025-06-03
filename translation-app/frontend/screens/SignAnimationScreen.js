@@ -1,17 +1,23 @@
 // translation-app/frontend/screens/SignAnimationScreen.js
 import React, { useState, useEffect, useRef } from 'react';
-import { View, TextInput, Text, Image, TouchableOpacity, StyleSheet, I18nManager } from 'react-native';
+import { View, TextInput, Text, Image, TouchableOpacity, StyleSheet, I18nManager, Animated, Easing } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { signMap } from '../assets/signMap';
-// import Video from 'react-native-video'; // Uncomment if using MP4
+import Video from 'react-native-video'; // Uncomment if using MP4
 import { KeyboardAvoidingView, Platform } from 'react-native';
+import { Audio } from 'expo-av';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 I18nManager.forceRTL(true); // Ensure RTL for Arabic
+
 
 export default function SignAnimationScreen() {
   const navigation = useNavigation();
   const [input, setInput] = useState('');
   const [words, setWords] = useState([]);
   const [currentIdx, setCurrentIdx] = useState(0);
+  const [recording, setRecording] = useState(null);
+  const [isRecording, setIsRecording] = useState(false);
+  const pulseAnim = useRef(new Animated.Value(1)).current;
 
   // Auto-advance to next word every 2 seconds
   useEffect(() => {
@@ -24,6 +30,19 @@ export default function SignAnimationScreen() {
     return () => clearTimeout(timer);
   }, [currentIdx, words]);
 
+  useEffect(() => {
+    if (isRecording) {
+      Animated.loop(
+        Animated.sequence([
+          Animated.timing(pulseAnim, { toValue: 1.3, duration: 500, useNativeDriver: true, easing: Easing.inOut(Easing.ease) }),
+          Animated.timing(pulseAnim, { toValue: 1, duration: 500, useNativeDriver: true, easing: Easing.inOut(Easing.ease) }),
+        ])
+      ).start();
+    } else {
+      pulseAnim.setValue(1);
+    }
+  }, [isRecording]);
+
   const handleTranslate = () => {
     const splitWords = input.trim().split(/\s+/);
     setWords(splitWords);
@@ -32,6 +51,52 @@ export default function SignAnimationScreen() {
 
   const currentWord = words[currentIdx];
   const animationSource = signMap[currentWord];
+
+  const startRecording = async () => {
+    try {
+      await Audio.requestPermissionsAsync();
+      await Audio.setAudioModeAsync({
+        allowsRecordingIOS: true,
+        playsInSilentModeIOS: true,
+      });
+      const { recording } = await Audio.Recording.createAsync(
+        Audio.RecordingOptionsPresets.HIGH_QUALITY
+      );
+      setRecording(recording);
+      setIsRecording(true);
+    } catch (err) {
+      console.error('Failed to start recording', err);
+    }
+  };
+
+  const stopRecording = async () => {
+    setIsRecording(false);
+    await recording.stopAndUnloadAsync();
+    const uri = recording.getURI();
+    setRecording(null);
+    // Now send to backend
+    sendAudioToBackend(uri);
+  };
+
+  const sendAudioToBackend = async (uri) => {
+    const formData = new FormData();
+    formData.append('audio', {
+      uri,
+      type: 'audio/wav',
+      name: 'audio.wav',
+    });
+
+    const response = await fetch('https://1838-197-59-192-40.ngrok-free.app/transcribe', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    const data = await response.json();
+    setInput(data.transcript); // Set the transcript in the input field
+    handleTranslate(); // Optionally trigger translation automatically
+  };
 
   return (
     <KeyboardAvoidingView
@@ -49,8 +114,8 @@ export default function SignAnimationScreen() {
             <View style={styles.animationCard}>
                 {currentWord ? (
                 animationSource ? (
-                    <Image source={animationSource} style={styles.animation} />
-                    // <Video source={animationSource} style={styles.animation} repeat /> // For MP4
+                  <Image source={animationSource} style={styles.animation} />
+                    //<Video source={animationSource} style={styles.animation}  /> // For MP4
                 ) : (
                     <Text style={styles.notFound}>الإشارة غير متوفرة: {currentWord}</Text>
                 )
@@ -61,8 +126,8 @@ export default function SignAnimationScreen() {
         </View>
         {/* Input area */}
         <View style={styles.inputArea}>
-            <TouchableOpacity style={styles.addButton} onPress={handleTranslate}>
-            <Text style={styles.addButtonText}>+</Text>
+            <TouchableOpacity style={styles.addButton} onPress={handleTranslate} disabled={isRecording}>
+              <Text style={styles.addButtonText}>+</Text>
             </TouchableOpacity>
             <TextInput
             value={input}
@@ -71,11 +136,26 @@ export default function SignAnimationScreen() {
             style={styles.input}
             textAlign="right"
             onSubmitEditing={handleTranslate}
+            editable={!isRecording}
             />
-            <TouchableOpacity style={styles.micButton}>
-            <Text style={styles.micIcon}>🎤</Text>
-            </TouchableOpacity>
+            <Animated.View style={{ transform: [{ scale: isRecording ? pulseAnim : 1 }] }}>
+              <TouchableOpacity
+                style={[
+                  styles.micButton,
+                  isRecording && { backgroundColor: '#dc2626', borderColor: '#dc2626' }
+                ]}
+                onPress={isRecording ? stopRecording : startRecording}
+                disabled={isRecording && !stopRecording}
+              >
+                <MaterialCommunityIcons
+                  name="microphone"
+                  size={28}
+                  color={isRecording ? "#fff" : "#fff"}
+                />
+              </TouchableOpacity>
+            </Animated.View>
         </View>
+        {isRecording && <Text style={styles.listeningText}>يستمع...</Text>}
         {/* Progress indicator */}
         {words.length > 0 && (
             <Text style={styles.progress}>
@@ -162,8 +242,27 @@ const styles = StyleSheet.create({
   },
   micButton: {
     marginLeft: 8,
+    backgroundColor: '#3a8dde',
+    borderRadius: 24,
+    width: 48,
+    height: 48,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: '#3a8dde',
+    elevation: 3,
   },
-  micIcon: { fontSize: 24, color: '#3a8dde' },
+  micIcon: {
+    fontSize: 28,
+    color: '#fff',
+  },
+  listeningText: {
+    color: '#dc2626',
+    fontSize: 16,
+    marginTop: 10,
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
   progress: {
     textAlign: 'center',
     color: '#3a8dde',

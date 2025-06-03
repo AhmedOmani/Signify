@@ -1,8 +1,11 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import numpy as np
+from google.cloud import speech
 import joblib
 from collections import Counter
+import os 
+import subprocess
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -11,6 +14,44 @@ CORS(app)
 
 # Load the static trained model
 model = joblib.load("model.pkl")
+
+
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/hp/Desktop/final-project-version/backend/speech-to-text-461812-5d42c31e7381.json"
+
+@app.route('/transcribe', methods=['POST'])
+def transcribe():
+    audio_file = request.files['audio']
+    content = audio_file.read()
+
+    with open('debug_audio.wav', 'wb') as f:
+        f.write(content)
+
+    subprocess.run([
+        'ffmpeg', '-y', '-i', 'debug_audio.wav',
+        '-acodec', 'pcm_s16le', '-ac', '1', '-ar', '16000', 'converted.wav'
+    ])
+
+    with open('converted.wav', 'rb') as f:
+        content = f.read()
+
+    client = speech.SpeechClient()
+    audio = speech.RecognitionAudio(content=content)
+    config = speech.RecognitionConfig(
+        encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
+        sample_rate_hertz=16000,
+        language_code="ar-SA",
+    )
+
+    response = client.recognize(config=config, audio=audio)
+    print("Response:", response)
+    transcript = ""
+    for result in response.results:
+        print("Result:", result)
+        transcript += result.alternatives[0].transcript
+    transcript = transcript.replace("سين فاي", "ساينيفاي")
+    transcript = transcript.replace("سين 5", "ساينيفاي")
+    print("Transcript:", transcript)
+    return jsonify({"transcript": transcript})
 
 # Arabic sign language mapping
 # Note: Adjust labels based on your model's classes.
