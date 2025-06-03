@@ -13,7 +13,7 @@
 - User greeting and clear navigation to all features.
 - Quick access buttons for each main feature.
 
-![Home Screen](./assets/home_screen.png)
+![Home Screen](./assets/home-screen.png)
 
 ---
 
@@ -22,7 +22,7 @@
 - Optionally, the app can speak the translated text using Text-to-Speech.
 - Interactive UI with live camera, translation result, and reset button.
 
-![Sign-to-Text](./assets/sign_to_text.png)
+![Sign-to-Text](./assets/sign-to-text.png)
 
 ---
 
@@ -31,7 +31,6 @@
 - The app uses Google Cloud Speech-to-Text for accurate voice recognition (Arabic supported).
 - Displays a skeleton animation (GIF/MP4) showing the sign for the recognized word/phrase.
 
-![Text-to-Sign](./assets/text_to_sign.png)
 
 ---
 
