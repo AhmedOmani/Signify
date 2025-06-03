@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Alert, Linking } from 'react-native';
 
 const WebViewScreen = () => {
   // Replace this with your laptop's IP address
-  const WEB_APP_URL = 'https://6dbb-197-59-153-78.ngrok-free.app';
+  const WEB_APP_URL = 'https://159f-197-59-192-40.ngrok-free.app';
 
   useEffect(() => {
     Linking.openURL(WEB_APP_URL).catch(() => {
