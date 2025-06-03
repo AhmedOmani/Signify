@@ -74,7 +74,7 @@
 - Access help, about, and other preferences.
 - Simple, intuitive design for easy navigation.
 
-![Settings Screen](./assets/settings-screen.png)
+![Settings Screen](./assets/setting-screen.png)
 
 ---
 
