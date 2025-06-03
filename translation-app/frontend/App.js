@@ -85,10 +85,10 @@ export default function App() {
             behavior={Platform.OS === "ios" ? "padding" : "height"}
             keyboardVerticalOffset={Platform.OS === "ios" ? 40 : 0}
           >
-            <SignupScreen
-              onSignup={setUser}
-              onNavigateToLogin={() => setShowSignup(false)}
-            />
+          <SignupScreen
+            onSignup={setUser}
+            onNavigateToLogin={() => setShowSignup(false)}
+          />
           </KeyboardAvoidingView>
         </SafeAreaProvider>
       );
@@ -101,10 +101,10 @@ export default function App() {
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           keyboardVerticalOffset={Platform.OS === "ios" ? 40 : 0}
         >
-          <LoginScreen
-            onLogin={setUser}
-            onNavigateToSignup={() => setShowSignup(true)}
-          />
+        <LoginScreen
+          onLogin={setUser}
+          onNavigateToSignup={() => setShowSignup(true)}
+        />
         </KeyboardAvoidingView>
       </SafeAreaProvider>
     );

@@ -18,60 +18,31 @@ const HomeScreen = ({ user }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <View style={styles.headerIcon}>
-          <Ionicons name="home" size={24} color="#fff" />
-        </View>
-        <Text style={styles.headerTitle}>الصفحة الرئيسية</Text>
+        <MaterialCommunityIcons name="account-circle" size={32} color="#2563eb" />
+        <Text style={styles.greeting}>مرحباً ahmed</Text>
       </View>
-
-      <View style={styles.welcomeContainer}>
-        <View style={styles.welcomeRow}>
-          <Text style={styles.welcomeText}>مرحبا</Text>
-          <Text style={styles.userName}>{user?.username}</Text>
-        </View>
-        <TouchableOpacity style={styles.languageSelector}>
-          <Image
-            source={require("../assets/home.png")}
-            style={styles.flagIcon}
-          />
-          <Ionicons name="chevron-down" size={16} color="#64748b" />
+      <Text style={styles.featuresTitle}>الخدمات</Text>
+      <View style={styles.cardContainer}>
+        <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('WebView')}>
+          <MaterialCommunityIcons name="hand-left" size={36} color="#2563eb" style={styles.cardIcon} />
+          <View style={styles.cardText}>
+            <Text style={styles.cardTitle}>ترجمة لغة الإشارة</Text>
+            <Text style={styles.cardSubtitle}>Sign-to-Text • Sign-to-Speech</Text>
+          </View>
+          <MaterialCommunityIcons name="help-circle" size={28} color="#3a8dde" />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('SignAnimationScreen')}>
+          <MaterialCommunityIcons name="microphone" size={36} color="#2563eb" style={styles.cardIcon} />
+          <View style={styles.cardText}>
+            <Text style={styles.cardTitle}>الترجمة الصوتية</Text>
+            <Text style={styles.cardSubtitle}>Text-to-Sign</Text>
+          </View>
+          <MaterialCommunityIcons name="file-document" size={28} color="#3a8dde" />
         </TouchableOpacity>
       </View>
-
-      <Text style={styles.featuresTitle}>Features</Text>
-
-      <View style={styles.optionsContainer}>
-        <TouchableOpacity 
-          style={[styles.optionCard, styles.signCard]}
-          onPress={() => navigation.navigate('WebView')}
-        >
-          <View style={styles.optionIconContainer}>
-            <MaterialCommunityIcons name="hand" size={24} color="#fff" />
-          </View>
-          <View style={styles.optionTextContainer}>
-            <Text style={styles.optionTitle}>ترجمة لغة الاشارة</Text>
-            <Text style={styles.optionSubtitle}>Sign-to-Text • Sign-to-Speech</Text>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity 
-          style={[styles.optionCard, styles.wordCard]}
-          onPress={() => navigation.navigate('SignAnimationScreen')}
-        >
-          <View style={[styles.optionIconContainer, styles.wordIconContainer]}>
-            <MaterialCommunityIcons name="text-box-outline" size={24} color="#fff" />
-          </View>
-          <View style={styles.optionTextContainer}>
-            <Text style={styles.optionTitle}>الترجمة الصوتية</Text>
-            <Text style={styles.optionSubtitle}>Text-to-Sign</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.infoContainer}>
-        <Text style={styles.infoText}>
-          اللغة الافتراضية هي اللغة العربية
-        </Text>
+      <View style={styles.languageBox}>
+        <MaterialCommunityIcons name="translate" size={20} color="#2563eb" />
+        <Text style={styles.languageText}>اللغة الافتراضية هي اللغة العربية</Text>
       </View>
     </SafeAreaView>
   );
@@ -81,129 +52,83 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f8fafc',
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    paddingTop: 32,
+    paddingHorizontal: 16,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 16,
-    backgroundColor: '#2563eb', // Blue-600
+    marginBottom: 18,
+    marginLeft: 10,
+    marginTop: 8,
   },
-  headerIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 8,
-    backgroundColor: '#1d4ed8', // Blue-700
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 12,
-  },
-  headerTitle: {
+  greeting: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#fff',
-  },
-  welcomeContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 16,
-    paddingTop: 24,
-  },
-  welcomeRow: {
-    flexDirection: 'column',
-  },
-  welcomeText: {
-    fontSize: 14,
-    color: '#64748b', // Slate-500
-  },
-  userName: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#0f172a', // Slate-900
-  },
-  languageSelector: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 8,
-    borderWidth: 1,
-    borderColor: '#e2e8f0', // Slate-200
-    borderRadius: 8,
-  },
-  flagIcon: {
-    width: 20,
-    height: 15,
-    marginRight: 4,
+    color: '#2563eb',
+    marginLeft: 8,
   },
   featuresTitle: {
-    fontSize: 16,
+    fontSize: 18,
+    color: '#64748b',
     fontWeight: 'bold',
-    color: '#64748b', // Slate-500
-    marginLeft: 16,
-    marginBottom: 12,
+    marginBottom: 18,
+    marginTop: 8,
+    marginRight: 310,
+    textAlign: 'right',
+    alignSelf: 'flex-end',
   },
-  optionsContainer: {
-    paddingHorizontal: 16,
-    gap: 16,
+  cardContainer: {
+    gap: 18,
+    marginBottom: 24,
+    marginTop: 0,
   },
-  optionCard: {
+  card: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 16,
-    borderRadius: 12,
     backgroundColor: '#fff',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2,
+    borderRadius: 18,
+    paddingVertical: 20,
+    paddingHorizontal: 18,
+    marginBottom: 16,
+    marginRight: 10,
+    marginLeft: 15,
+    elevation: 3,
+    shadowColor: '#2563eb',
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 2 },
   },
-  signCard: {
-    borderLeftWidth: 4,
-    borderLeftColor: '#3b82f6', // Blue-500
+  cardIcon: {
+    marginRight: 14,
   },
-  wordCard: {
-    borderLeftWidth: 4,
-    borderLeftColor: '#0ea5e9', // Sky-500
-  },
-  optionIconContainer: {
-    width: 40,
-    height: 40,
-    borderRadius: 8,
-    backgroundColor: '#3b82f6', // Blue-500
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 12,
-  },
-  wordIconContainer: {
-    backgroundColor: '#0ea5e9', // Sky-500
-  },
-  optionTextContainer: {
+  cardText: {
     flex: 1,
+    marginRight: 8,
   },
-  optionTitle: {
-    fontSize: 16,
+  cardTitle: {
+    fontSize: 17,
     fontWeight: 'bold',
-    color: '#0f172a', // Slate-900
+    color: '#1e293b',
+    marginBottom: 2,
   },
-  optionSubtitle: {
-    fontSize: 12,
-    color: '#64748b', // Slate-500
-    marginTop: 2,
+  cardSubtitle: {
+    fontSize: 13,
+    color: '#64748b',
   },
-  infoContainer: {
-    margin: 16,
-    padding: 16,
-    backgroundColor: '#eff6ff', // Blue-50
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: '#dbeafe', // Blue-100
-    borderStyle: 'dashed',
+  languageBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#e0e7ff',
+    borderRadius: 10,
+    padding: 10,
+    marginTop: 18,
+    alignSelf: 'center',
   },
-  infoText: {
-    fontSize: 14,
-    color: '#1e40af', // Blue-800
-    lineHeight: 20,
+  languageText: {
+    color: '#2563eb',
+    fontSize: 15,
+    marginLeft: 6,
   },
 });
 

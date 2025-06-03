@@ -33,7 +33,7 @@ const SettingsScreen = ({ onLogout }) => {
             <Text style={styles.settingText}>لغة الإشارة</Text>
           </View>
           <View style={styles.valueContainer}>
-            <Text style={styles.valueText}>BSL</Text>
+            <Text style={styles.valueText}>Arabic</Text>
             <Ionicons name="chevron-forward" size={16} color="#64748b" />
           </View>
         </TouchableOpacity>
