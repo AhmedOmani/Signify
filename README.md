@@ -15,9 +15,18 @@
 
 ![Home Screen](./assets/home-screen.png)
 
+### 2. **User Authentication: Sign In & Sign Up**
+- Secure registration and login for all users.
+- Simple, attractive forms with clear error messages and validation.
+- RTL support and blue-themed design for consistency.
+- User data is securely handled and required for accessing main features.
+
+![Sign Up](./assets/sign-up-screen.png)
+![Sign In](./assets/sign-in-screen.png)
+
 ---
 
-### 2. **Sign-to-Text & Sign-to-Speech**
+### 3. **Sign-to-Text & Sign-to-Speech**
 - Use your camera to recognize hand signs and convert them to Arabic text.
 - Optionally, the app can speak the translated text using Text-to-Speech.
 - Interactive UI with live camera, translation result, and reset button.
@@ -26,7 +35,7 @@
 
 ---
 
-### 3. **Text/Voice-to-Sign Animation**
+### 4. **Text/Voice-to-Sign Animation**
 - Enter a word/phrase or use the microphone to speak.
 - The app uses Google Cloud Speech-to-Text for accurate voice recognition (Arabic supported).
 - Displays a skeleton animation (GIF/MP4) showing the sign for the recognized word/phrase.
@@ -34,7 +43,7 @@
 
 ---
 
-### 4. **Skeleton Signs Recording & Visualization**
+### 5. **Skeleton Signs Recording & Visualization**
 - Record new signs using your webcam.
 - Extract skeleton landmarks using MediaPipe Holistic.
 - Export sign animations as GIF/MP4 for use in the app.
@@ -43,7 +52,7 @@
 
 ---
 
-### 5. **Smart Voice UI**
+### 6. **Smart Voice UI**
 - Interactive microphone button with color and pulse animation when recording.
 - "Listening..." text appears while recording.
 - Seamless integration between UI and voice features.
@@ -52,7 +61,7 @@
 
 ---
 
-### 6. **Complete User Experience**
+### 7. **Complete User Experience**
 - Full Arabic (RTL) support.
 - Consistent blue/white color palette and responsive design.
 - Clear error messages and user guidance.
@@ -102,6 +111,7 @@ assets/
   skeleton_signs.png
   voice_ui.png
   logo.png
+  signup.png
 ```
 
 ---
