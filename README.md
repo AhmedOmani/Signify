@@ -40,7 +40,6 @@
 - The app uses Google Cloud Speech-to-Text for accurate voice recognition (Arabic supported).
 - Displays a skeleton animation (GIF/MP4) showing the sign for the recognized word/phrase.
 
-
 ---
 
 ### 5. **Skeleton Signs Recording & Visualization**
@@ -61,7 +60,25 @@
 
 ---
 
-### 7. **Complete User Experience**
+### 7. **History Screen**
+- View a list of your recent translations and sign activities.
+- Easily revisit previous translations for reference or practice.
+- Clean, organized layout with clear timestamps and details.
+
+![History Screen](./assets/history-screen.png)
+
+---
+
+### 8. **Settings Screen**
+- Customize your app experience (language, theme, etc.).
+- Access help, about, and other preferences.
+- Simple, intuitive design for easy navigation.
+
+![Settings Screen](./assets/settings-screen.png)
+
+---
+
+### 9. **Complete User Experience**
 - Full Arabic (RTL) support.
 - Consistent blue/white color palette and responsive design.
 - Clear error messages and user guidance.
@@ -112,6 +129,10 @@ assets/
   voice_ui.png
   logo.png
   signup.png
+  sign-in-screen.png
+  sign-up-screen.png
+  history-screen.png
+  settings-screen.png
 ```
 
 ---
