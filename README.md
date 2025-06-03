@@ -1,6 +1,6 @@
 # Signify (ساينيفاي)
 
-![Signify Logo](assets/logo.png)
+![Signify Logo](./assets/logo.png)
 
 **Signify** is an integrated smart application that bridges the gap between sign language and spoken/written language. It provides easy-to-use, AI-powered solutions for translation between sign and text/speech, with a modern, user-friendly interface.
 
@@ -13,7 +13,7 @@
 - User greeting and clear navigation to all features.
 - Quick access buttons for each main feature.
 
-![Home Screen](assets/home_screen.png)
+![Home Screen](./assets/home_screen.png)
 
 ---
 
@@ -22,7 +22,7 @@
 - Optionally, the app can speak the translated text using Text-to-Speech.
 - Interactive UI with live camera, translation result, and reset button.
 
-![Sign-to-Text](assets/sign_to_text.png)
+![Sign-to-Text](./assets/sign_to_text.png)
 
 ---
 
@@ -31,7 +31,7 @@
 - The app uses Google Cloud Speech-to-Text for accurate voice recognition (Arabic supported).
 - Displays a skeleton animation (GIF/MP4) showing the sign for the recognized word/phrase.
 
-![Text-to-Sign](assets/text_to_sign.png)
+![Text-to-Sign](./assets/text_to_sign.png)
 
 ---
 
@@ -40,7 +40,7 @@
 - Extract skeleton landmarks using MediaPipe Holistic.
 - Export sign animations as GIF/MP4 for use in the app.
 
-![Skeleton Signs](assets/skeleton_signs.png)
+![Skeleton Signs](./assets/skeleton_signs.MP4)
 
 ---
 
@@ -49,7 +49,7 @@
 - "Listening..." text appears while recording.
 - Seamless integration between UI and voice features.
 
-![Voice UI](assets/voice_ui.png)
+![Voice UI](./assets/speech-recognition.MP4)
 
 ---
 
@@ -138,30 +138,6 @@ ngrok http 3000   # For frontend
 ngrok http 5000   # For backend
 ```
 - Update URLs in the code to match new ngrok addresses.
-
----
-
-## 📝 Notes
-- **Never commit secrets (Google JSON keys) to the repository.**
-- Update ngrok URLs in your code whenever you restart ngrok.
-- All screenshots and demo videos are in the `assets` directory.
-
----
-
-## 👨‍💻 Team
-- Ahmed (Project Lead & Main Developer)
-- [Add other team members here]
-
----
-
-## 📸 Screenshots & Demos
-
-> Each feature above is illustrated with a screenshot or video from the `assets` directory. Please ensure all referenced images/videos exist in `assets/` with the correct names.
-
----
-
-## 📣 Contact & Support
-For questions or technical support, contact us via email or through the project's GitHub page.
 
 ---
 
