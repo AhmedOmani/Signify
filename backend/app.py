@@ -6,6 +6,7 @@ import joblib
 from collections import Counter
 import os 
 import subprocess
+import whisper
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -14,44 +15,33 @@ CORS(app)
 
 # Load the static trained model
 model = joblib.load("model.pkl")
-
+whisper_model = whisper.load_model('tiny')
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/hp/Desktop/final-project-version/backend/speech-to-text-461812-5d42c31e7381.json"
 
 @app.route('/transcribe', methods=['POST'])
 def transcribe():
+    if 'audio' not in request.files:
+        return jsonify({'error': 'No audio file uploaded'}), 400
+
     audio_file = request.files['audio']
-    content = audio_file.read()
-
     with open('debug_audio.wav', 'wb') as f:
-        f.write(content)
+        f.write(audio_file.read())
 
+    # Convert to wav/16kHz/mono if needed
     subprocess.run([
         'ffmpeg', '-y', '-i', 'debug_audio.wav',
         '-acodec', 'pcm_s16le', '-ac', '1', '-ar', '16000', 'converted.wav'
     ])
 
-    with open('converted.wav', 'rb') as f:
-        content = f.read()
+    # Transcribe using Whisper
+    try:
+        result = whisper_model.transcribe('converted.wav', language='ar')
+        transcript = result['text']
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
-    client = speech.SpeechClient()
-    audio = speech.RecognitionAudio(content=content)
-    config = speech.RecognitionConfig(
-        encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
-        sample_rate_hertz=16000,
-        language_code="ar-SA",
-    )
-
-    response = client.recognize(config=config, audio=audio)
-    print("Response:", response)
-    transcript = ""
-    for result in response.results:
-        print("Result:", result)
-        transcript += result.alternatives[0].transcript
-    transcript = transcript.replace("سين فاي", "ساينيفاي")
-    transcript = transcript.replace("سين 5", "ساينيفاي")
-    print("Transcript:", transcript)
-    return jsonify({"transcript": transcript})
+    return jsonify({'transcript': transcript})
 
 # Arabic sign language mapping
 # Note: Adjust labels based on your model's classes.

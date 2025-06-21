@@ -6,11 +6,13 @@ import { useState } from "react";
 
 function App() {
   const [prediction, setPrediction] = useState("");
+  const [newWord, setNewWord] = useState("");
   const [error, setError] = useState("");
   const [lastMergeable, setLastMergeable] = useState(true);
 
   const handlePrediction = (newToken, wasMergeable) => {
     setError("");
+    setNewWord(newToken);
     setPrediction((prev) => {
       let newPrediction;
       let newFlag;
@@ -40,6 +42,7 @@ function App() {
 
   const handleReset = () => {
     setPrediction("");
+    setNewWord("");
     setError("");
     setLastMergeable(true);
   };
@@ -56,6 +59,7 @@ function App() {
         </section>
         <TranslationResult
           prediction={prediction}
+          newWord={newWord}
           onReset={handleReset}
         />
       </main>

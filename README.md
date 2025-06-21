@@ -96,79 +96,13 @@
 - **FFmpeg**: Audio format conversion
 - **Ngrok**: Local server tunneling
 
+## 🗣️ Speech Technologies
+- **Google Cloud Speech-to-Text**: Used for accurate voice recognition in Arabic.
+- **Web Speech API**: Provides text-to-speech capabilities for speaking translations.
+- **ResponsiveVoice**: Enhances text-to-speech functionality with additional features.
+
 ---
 
 ## 📂 Project Structure
 
 ```
-backend/
-  app.py
-  ...
-frontend/
-  src/
-    App.js
-    HandDetection.js
-    ...
-translation-app/
-  frontend/
-    screens/
-      HomeScreen.js
-      SignAnimationScreen.js
-    assets/
-      skeleton_animation/
-      ...
-skeleton-signs/
-  record_and_extract.py
-  visualize_skeleton.py
-  ...
-assets/
-  home_screen.png
-  sign_to_text.png
-  text_to_sign.png
-  skeleton_signs.png
-  voice_ui.png
-  logo.png
-  signup.png
-  sign-in-screen.png
-  sign-up-screen.png
-  history-screen.png
-  settings-screen.png
-```
-
----
-
-## ⚡ How to Run the Project
-
-### 1. **Backend (Flask)**
-```bash
-cd backend
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-python app.py
-```
-
-### 2. **Web Frontend**
-```bash
-cd frontend
-npm install
-npm start
-```
-
-### 3. **Mobile App (Expo)**
-```bash
-cd translation-app/frontend
-npm install
-npm start
-```
-
-### 4. **Ngrok (for mobile access)**
-```bash
-ngrok http 3000   # For frontend
-ngrok http 5000   # For backend
-```
-- Update URLs in the code to match new ngrok addresses.
-
----
-
-**Signify – Bridging the gap, one sign at a time!**

@@ -6,12 +6,12 @@ const responsiveSpeakText = (text) => {
   }
 };
 
-const TranslationResult = ({ prediction, onReset }) => {
+const TranslationResult = ({ prediction, newWord, onReset }) => {
   useEffect(() => {
-    if (prediction) {
-      responsiveSpeakText(prediction);
+    if (newWord) {
+      responsiveSpeakText(newWord);
     }
-  }, [prediction]);
+  }, [newWord]);
 
   return (
     <div className="translation-result-card">

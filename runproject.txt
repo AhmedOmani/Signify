@@ -4,9 +4,12 @@ IMPORTANT NOTE:
 so take the frontendURL and go to => translation app => frontend => screens => WebViewScreen 
 and update the WEB_APP_URL
 
-* And take the backendURL and go to frontend => src => HandDetection
-and update line of axios fetching
-
+* And take the backendURL and go to frontend => src => HandDetection , translation-app/frontend/screens/SignAnimatedScreen.js
+and update line of axios fetching with ngrok url
+And 
+* IMPORTANT NOOOOTTTEEE:
+WHEN YOU OPEN HOTSPOT FOR THE LAPTOP TAKE THE IP ADRRESS YOU GET ,
+THEN PUT IN THE SRC/CONFIG.JS file in DEVELOPMENT COMMENT
 
 # How to Run the Full Project from Scratch
 

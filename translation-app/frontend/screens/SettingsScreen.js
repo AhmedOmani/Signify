@@ -1,12 +1,101 @@
-import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Switch, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, SafeAreaView, Switch, TouchableOpacity, Image, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { googleSignOut, checkGoogleAuthStatus } from '../src/googleAuth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const SettingsScreen = ({ onLogout }) => {
+const SettingsScreen = ({ onLogout, user }) => {
+  const [googleUser, setGoogleUser] = useState(null);
+  const [isGoogleUser, setIsGoogleUser] = useState(false);
+
+  useEffect(() => {
+    checkGoogleAuth();
+  }, []);
+
+  const checkGoogleAuth = async () => {
+    try {
+      const authStatus = await checkGoogleAuthStatus();
+      if (authStatus.isSignedIn) {
+        setGoogleUser(authStatus.user);
+        setIsGoogleUser(true);
+      }
+    } catch (error) {
+      console.error('Error checking Google auth status:', error);
+    }
+  };
+
+  const handleLogout = async () => {
+    Alert.alert(
+      'تسجيل الخروج',
+      'هل أنت متأكد من أنك تريد تسجيل الخروج؟',
+      [
+        {
+          text: 'إلغاء',
+          style: 'cancel',
+        },
+        {
+          text: 'تسجيل الخروج',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              // If user signed in with Google, sign out from Google too
+              if (isGoogleUser) {
+                await googleSignOut();
+              }
+              
+              // Clear any stored user data
+              await AsyncStorage.multiRemove([
+                'user',
+                'googleAccessToken',
+                'googleRefreshToken',
+                'googleUserInfo'
+              ]);
+              
+              // Call the parent logout function
+              onLogout();
+            } catch (error) {
+              console.error('Logout error:', error);
+              // Still logout even if Google signout fails
+              onLogout();
+            }
+          },
+        },
+      ]
+    );
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>الإعدادات</Text>
+      </View>
+
+      {/* User Profile Section */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>الملف الشخصي</Text>
+        <View style={styles.profileContainer}>
+          {isGoogleUser && googleUser?.picture ? (
+            <Image source={{ uri: googleUser.picture }} style={styles.profileImage} />
+          ) : (
+            <View style={styles.profileImagePlaceholder}>
+              <Ionicons name="person" size={24} color="#2563eb" />
+            </View>
+          )}
+          <View style={styles.profileInfo}>
+            <Text style={styles.profileName}>
+              {isGoogleUser ? googleUser?.name : user?.username || 'المستخدم'}
+            </Text>
+            <Text style={styles.profileEmail}>
+              {isGoogleUser ? googleUser?.email : user?.email}
+            </Text>
+            {isGoogleUser && (
+              <View style={styles.googleBadge}>
+                <Ionicons name="logo-google" size={12} color="#4285F4" />
+                <Text style={styles.googleBadgeText}>Google</Text>
+              </View>
+            )}
+          </View>
+        </View>
       </View>
       
       <View style={styles.section}>
@@ -52,7 +141,8 @@ const SettingsScreen = ({ onLogout }) => {
 
       {/* Logout Button */}
       {onLogout && (
-        <TouchableOpacity style={styles.logoutButton} onPress={onLogout}>
+        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+          <Ionicons name="log-out-outline" size={20} color="#fff" style={styles.logoutIcon} />
           <Text style={styles.logoutText}>تسجيل الخروج</Text>
         </TouchableOpacity>
       )}
@@ -84,6 +174,57 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#64748b',
     marginBottom: 12,
+  },
+  profileContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e2e8f0',
+  },
+  profileImage: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    marginRight: 16,
+  },
+  profileImagePlaceholder: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: '#e2e8f0',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 16,
+  },
+  profileInfo: {
+    flex: 1,
+  },
+  profileName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#0f172a',
+    marginBottom: 4,
+  },
+  profileEmail: {
+    fontSize: 14,
+    color: '#64748b',
+    marginBottom: 4,
+  },
+  googleBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f0f9ff',
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 12,
+    alignSelf: 'flex-start',
+  },
+  googleBadgeText: {
+    fontSize: 12,
+    color: '#4285F4',
+    fontWeight: '500',
+    marginLeft: 4,
   },
   settingItem: {
     flexDirection: 'row',
@@ -120,10 +261,15 @@ const styles = StyleSheet.create({
   logoutButton: {
     marginTop: 32,
     marginHorizontal: 16,
-    backgroundColor: '#1d4ed8',
+    backgroundColor: '#dc2626',
     padding: 14,
     borderRadius: 8,
     alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  logoutIcon: {
+    marginRight: 8,
   },
   logoutText: {
     color: '#fff',

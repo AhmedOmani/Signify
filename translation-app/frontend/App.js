@@ -58,7 +58,7 @@ function TabNavigator({ user, onLogout }) {
       />
       <Tab.Screen
         name="Settings"
-        children={() => <SettingsScreen onLogout={onLogout} />}
+        children={() => <SettingsScreen onLogout={onLogout} user={user} />}
         options={{ tabBarLabel: 'الإعدادات' }}
       />
     </Tab.Navigator>

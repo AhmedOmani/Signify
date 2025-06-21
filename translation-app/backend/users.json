@@ -8,5 +8,25 @@
     "username": "malak",
     "email": "malak@gmail.com",
     "password": "$2b$10$Hj878pcmPqaejRLP2Iuc3eQ1MVZUM5OH1YJzxOrRygr/sL1AdnIBC"
+  },
+  {
+    "username": "ahmed",
+    "email": "ahmedomani@gmail.com",
+    "password": "$2b$10$kfYMPxirKpo74elAbHklUe.XKmlM24phpn3rmFTkWMGXkBq1OxF4a"
+  },
+  {
+    "username": "ahmed",
+    "email": "ahmedomani2003@gmail.com",
+    "password": "$2b$10$PbmdJ4xqtFBKkvzoH4itJOISIVIsLMZLtiDaB/6fYQ8UeDEJFrz2e"
+  },
+  {
+    "username": "kero",
+    "email": "kero123@gmail.com",
+    "password": "$2b$10$s12dTItitZ7iJKCbkXqyL.fVh9NtrIkB7hKYfu9wFIQKiIPDON/XC"
+  },
+  {
+    "username": "keronabil",
+    "email": "kero@gmail.com",
+    "password": "$2b$10$zLEMDiukhA8t524QoSQdzOVriY.HpH763JNqRhWAvLWdNGYDfdvxy"
   }
 ]

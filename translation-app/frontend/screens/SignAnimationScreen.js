@@ -86,7 +86,7 @@ export default function SignAnimationScreen() {
       name: 'audio.wav',
     });
 
-    const response = await fetch('https://1838-197-59-192-40.ngrok-free.app/transcribe', {
+    const response = await fetch('https://eec0-196-137-136-210.ngrok-free.app/transcribe', {
       method: 'POST',
       body: formData,
       headers: {
@@ -172,16 +172,16 @@ const styles = StyleSheet.create({
   backButton: {
     position: 'absolute',
     top: 40,
-    left: 20,
+    right: 24,
     zIndex: 10,
-    backgroundColor: '#3a8dde',
+    backgroundColor: '#e0e7ef',
     paddingVertical: 8,
     paddingHorizontal: 18,
     borderRadius: 20,
     elevation: 2,
   },
   backButtonText: {
-    color: '#fff',
+    color: '#1e40af',
     fontSize: 16,
     fontWeight: 'bold',
   },

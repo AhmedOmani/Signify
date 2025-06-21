@@ -187,7 +187,7 @@ const HandDetection = (props) => {
   const sendSequenceToBackend = async (sequence) => {
     console.log("Sending sequence to backend with", sequence.length, "frames.");
     try {
-      const response = await axios.post("https://1838-197-59-192-40.ngrok-free.app/predict_sequence", { sequence });
+      const response = await axios.post("https://eec0-196-137-136-210.ngrok-free.app/predict_sequence", { sequence });
       console.log("Received response:", response.data);
       const newToken = response.data.prediction;
       console.log("New token:", newToken);

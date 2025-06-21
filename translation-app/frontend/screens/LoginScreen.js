@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, ActivityIndicator, I18nManager } from 'react-native';
 import axios from 'axios';
+import config from '../src/config';
 
 I18nManager.forceRTL(true);
 
@@ -14,8 +15,7 @@ export default function LoginScreen({ onLogin, onNavigateToSignup }) {
     setError('');
     setLoading(true);
     try {
-      // Use your backend IP if on a real device!
-      const res = await axios.post('http://192.168.100.3:4000/login', { email, password });
+      const res = await axios.post(`${config.API_URL}/login`, { email, password });
       setLoading(false);
       onLogin(res.data); // Pass user data up
     } catch (err) {
@@ -28,6 +28,7 @@ export default function LoginScreen({ onLogin, onNavigateToSignup }) {
     <View style={styles.container}>
       <Image source={require('../assets/Signify.png')} style={styles.logo} />
       <Text style={styles.title}>تسجيل الدخول إلى Signify</Text>
+      
       <View style={styles.inputContainer}>
         <Text style={styles.label}>البريد الإلكتروني</Text>
         <TextInput

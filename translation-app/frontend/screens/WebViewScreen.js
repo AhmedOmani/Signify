@@ -1,26 +1,31 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, Alert, Linking } from 'react-native';
+import { View, StyleSheet, Alert, Linking, Image, ActivityIndicator, TouchableOpacity, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
+const WEB_APP_URL = 'https://6f0d-196-137-136-210.ngrok-free.app';
 
 const WebViewScreen = () => {
-  // Replace this with your laptop's IP address
-  const WEB_APP_URL = 'https://159f-197-59-192-40.ngrok-free.app';
+  const navigation = useNavigation();
 
   useEffect(() => {
-    Linking.openURL(WEB_APP_URL).catch(() => {
-      Alert.alert(
-        'Error',
-        'Could not open the browser. Please check the URL and try again.'
-      );
-    });
+    const timer = setTimeout(() => {
+      Linking.openURL(WEB_APP_URL).catch(() => {
+        Alert.alert(
+          'خطأ',
+          'تعذر فتح المتصفح. يرجى التحقق من الرابط والمحاولة مرة أخرى.'
+        );
+      });
+    }, 2000); // Show loader for 2 seconds
+    return () => clearTimeout(timer);
   }, []);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.infoText}>
-        If the browser did not open automatically, please open this link manually:
-        {'\n'}
-        {WEB_APP_URL}
-      </Text>
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+        <Text style={styles.backButtonText}>الرجوع</Text>
+      </TouchableOpacity>
+      <Image source={require('./Signify.png')} style={styles.logo} resizeMode="contain" />
+      <ActivityIndicator size="large" color="#1e40af" style={styles.loader} />
     </View>
   );
 };
@@ -30,12 +35,31 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 24,
+    backgroundColor: '#fff',
   },
-  infoText: {
-    fontSize: 16,
-    textAlign: 'center',
+  logo: {
+    width: 180,
+    height: 180,
+    marginBottom: 24,
+  },
+  loader: {
+    marginTop: 12,
+  },
+  backButton: {
+    position: 'absolute',
+    top: 40,
+    right: 24,
+    zIndex: 10,
+    backgroundColor: '#e0e7ef',
+    paddingVertical: 8,
+    paddingHorizontal: 18,
+    borderRadius: 20,
+    elevation: 2,
+  },
+  backButtonText: {
     color: '#1e40af',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 

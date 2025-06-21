@@ -60,6 +60,81 @@ app.post('/login', (req, res) => {
   res.json({ username: user.username, email: user.email });
 });
 
-app.listen(PORT, () => {
-  console.log(`Backend running on http://localhost:${PORT}`);
+// Google Signup endpoint
+app.post('/google-signup', (req, res) => {
+  const { email, name, picture, googleId, authProvider } = req.body;
+  
+  if (!email || !name || !googleId || !authProvider) {
+    return res.status(400).json({ message: 'بيانات Google غير مكتملة' });
+  }
+
+  const users = readUsers();
+  
+  // Check if user already exists with this email
+  const existingUser = users.find(u => u.email === email);
+  if (existingUser) {
+    // If user exists but doesn't have Google auth, update their profile
+    if (!existingUser.googleId) {
+      existingUser.googleId = googleId;
+      existingUser.authProvider = authProvider;
+      existingUser.picture = picture;
+      writeUsers(users);
+    }
+    // Return existing user data (without password)
+    return res.json({ 
+      username: existingUser.username || name, 
+      email: existingUser.email,
+      picture: existingUser.picture || picture,
+      authProvider: existingUser.authProvider || authProvider
+    });
+  }
+
+  // Create new user with Google data
+  const newUser = {
+    username: name,
+    email: email,
+    googleId: googleId,
+    authProvider: authProvider,
+    picture: picture,
+    createdAt: new Date().toISOString()
+  };
+
+  users.push(newUser);
+  writeUsers(users);
+
+  res.json({ 
+    username: newUser.username, 
+    email: newUser.email,
+    picture: newUser.picture,
+    authProvider: newUser.authProvider
+  });
+});
+
+// Google Login endpoint
+app.post('/google-login', (req, res) => {
+  const { email, googleId } = req.body;
+  
+  if (!email || !googleId) {
+    return res.status(400).json({ message: 'بيانات Google غير مكتملة' });
+  }
+
+  const users = readUsers();
+  const user = users.find(u => u.email === email && u.googleId === googleId);
+  
+  if (!user) {
+    return res.status(404).json({ message: 'المستخدم غير موجود' });
+  }
+
+  // Return user data (without password)
+  res.json({ 
+    username: user.username, 
+    email: user.email,
+    picture: user.picture,
+    authProvider: user.authProvider
+  });
+});
+
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Backend running on http://0.0.0.0:${PORT}`);
+  console.log(`You can access it from your phone at http://172.20.10.6:${PORT}`);
 }); 

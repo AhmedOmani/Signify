@@ -24,20 +24,18 @@ const HomeScreen = ({ user }) => {
       <Text style={styles.featuresTitle}>الخدمات</Text>
       <View style={styles.cardContainer}>
         <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('WebView')}>
-          <MaterialCommunityIcons name="hand-left" size={36} color="#2563eb" style={styles.cardIcon} />
+          <MaterialCommunityIcons name="hand-wave" size={36} color="#2563eb" style={styles.cardIcon} />
           <View style={styles.cardText}>
             <Text style={styles.cardTitle}>ترجمة لغة الإشارة</Text>
-            <Text style={styles.cardSubtitle}>Sign-to-Text • Sign-to-Speech</Text>
           </View>
-          <MaterialCommunityIcons name="help-circle" size={28} color="#3a8dde" />
+         
         </TouchableOpacity>
         <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('SignAnimationScreen')}>
           <MaterialCommunityIcons name="microphone" size={36} color="#2563eb" style={styles.cardIcon} />
           <View style={styles.cardText}>
             <Text style={styles.cardTitle}>الترجمة الصوتية</Text>
-            <Text style={styles.cardSubtitle}>Text-to-Sign</Text>
           </View>
-          <MaterialCommunityIcons name="file-document" size={28} color="#3a8dde" />
+         
         </TouchableOpacity>
       </View>
       <View style={styles.languageBox}>

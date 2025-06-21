@@ -25,7 +25,7 @@ export default function SignupScreen({ onSignup, onNavigateToLogin }) {
     setLoading(true);
     try {
       // Use your backend IP if on a real device!
-      const res = await axios.post('http://192.168.100.3:4000/signup', { username, email, password });
+      const res = await axios.post('http://172.20.10.3:4000/signup', { username, email, password });
       setLoading(false);
       onSignup(res.data); // Pass user data up
     } catch (err) {
@@ -38,6 +38,7 @@ export default function SignupScreen({ onSignup, onNavigateToLogin }) {
     <View style={styles.container}>
       <Image source={require('../assets/Signify.png')} style={styles.logo} />
       <Text style={styles.title}>إنشاء حساب في Signify</Text>
+      
       <View style={styles.inputContainer}>
         <Text style={styles.label}>اسم المستخدم</Text>
         <TextInput
